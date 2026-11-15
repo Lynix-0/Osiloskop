@@ -12,8 +12,15 @@ def generate_signal(wave_type, t, amplitude, frequency, phase_deg, offset):
     signal = (amplitude * ham_dalga) + offset
     return signal
 fs = 10000
-sure = 0.04
-t = np.linspace(0, sure, int(fs*sure), endpoint=False)
+time_div = float(input("Time/Div değerini giriniz(Örneğin:0.005): "))
+sure = 10 * time_div
+hesaplanan_nokta = int(fs * sure)
+if hesaplanan_nokta >= 5000:
+    toplam_nokta = 5000
+else:
+    toplam_nokta = hesaplanan_nokta
+
+t = np.linspace(0, sure, toplam_nokta, endpoint=False)
 """
 #wave_type = input("Dalga türünü girin (sine / square / triangle): ")
 #frequency = float(input("Frekans değerini girin (Hz): "))
