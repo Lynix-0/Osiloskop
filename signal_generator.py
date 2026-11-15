@@ -10,7 +10,13 @@ def generate_signal(wave_type, t, amplitude, frequency, phase_deg, offset):
     elif wave_type == 'triangle':
         ham_dalga = (2 / np.pi) * np.arcsin(np.sin(2 * np.pi * frequency * t + faz))
     signal = (amplitude * ham_dalga) + offset
-    return signal
+    return {
+        "tur": wave_type,
+        "zaman": t,
+        "y_verisi": signal,
+        "frekans": frequency,
+        "genlik": amplitude
+    }
 fs = 10000
 time_div = float(input("Time/Div değerini giriniz(Örneğin:0.005): "))
 sure = 10 * time_div
@@ -37,6 +43,8 @@ ax.spines['bottom'].set_position(('data', 0))  # Alt çizgiyi y=0 noktasına ta�
 ax.spines['top'].set_visible(False)            # Üst çizgiyi görünmez yap
 ax.spines['right'].set_visible(False)          # Sağ çizgiyi görünmez yap
 
-plt.plot(t, ch1_sinyal, label='CH1', color='blue')
-plt.plot(t, ch2_sinyal, label='CH2', color='red')
+plt.plot(ch1_sinyal["zaman"], ch1_sinyal["y_verisi"], label=f'CH1 ({ch1_sinyal["tur"]})', color='blue')
+plt.plot(ch2_sinyal["zaman"], ch2_sinyal["y_verisi"], label=f'CH2 ({ch2_sinyal["tur"]})', color='red')
+
+plt.legend()
 plt.show()
